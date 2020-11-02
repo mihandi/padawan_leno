@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'homeUrl' => '/',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
@@ -15,6 +16,7 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'baseUrl' => '/'
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -40,7 +42,9 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'baseUrl' => Yii::getAlias('@backendBaseUrl'),
             'rules' => [
+                'baseUrl' => Yii::getAlias('@backendBaseUrl'),
             ],
         ],
     ],

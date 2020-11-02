@@ -37,6 +37,8 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
+        ['label' => 'Admin', 'url' => Yii::getAlias('@backendBaseUrl'), 'linkOptions' => ['target' => '_blank']],
+        ['label' => 'phpMyAdmin', 'url' => Yii::getAlias('@phpmyadmin'), 'linkOptions' => ['target' => '_blank']],
         ['label' => 'Home', 'url' => Url::to(['/site/index'])],
         ['label' => 'About', 'url' => Url::to(['/site/about'])],
         ['label' => 'Contact', 'url' => Url::to(['/site/contact'])],
