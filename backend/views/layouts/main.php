@@ -37,6 +37,7 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
+        ['label' => 'Front', 'url' => Yii::getAlias('@frontendBaseUrl')],
         ['label' => 'Home', 'url' => Url::to(['/site/index'])],
         ['label' => 'Categories', 'url' => Url::to(['/category/index'])],
         ['label' => 'Articles', 'url' => Url::to(['/article/index'])],
