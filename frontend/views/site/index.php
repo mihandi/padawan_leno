@@ -2,7 +2,8 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Frontend';
+
 ?>
 <div class="site-index">
 
