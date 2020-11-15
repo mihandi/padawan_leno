@@ -1,86 +1,113 @@
 <?php
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
-use yii\helpers\Html;
+use frontend\assets\AppAsset;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\Menu;
 use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
-use common\widgets\Alert;
 
+// You can use the registerAssetBundle function if you'd like
+//$this->registerAssetBundle('app');
 AppAsset::register($this);
 ?>
-<?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
-<head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-</head>
-<body>
-<?php $this->beginBody() ?>
+<?php $this->beginPage(); ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+        <title><?php echo Html::encode($this->title); ?></title>
+        <meta property='og:site_name' content='<?php echo Html::encode($this->title); ?>' />
+        <meta property='og:title' content='<?php echo Html::encode($this->title); ?>' />
+        <meta property='og:description' content='<?php echo Html::encode($this->title); ?>' />
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Admin', 'url' => Yii::getAlias('@backendBaseUrl'), 'linkOptions' => ['target' => '_blank']],
-        ['label' => 'phpMyAdmin', 'url' => Yii::getAlias('@phpmyadmin'), 'linkOptions' => ['target' => '_blank']],
-        ['label' => 'Home', 'url' => Url::to(['/site/index'])],
-        ['label' => 'About', 'url' => Url::to(['/site/about'])],
-        ['label' => 'Contact', 'url' => Url::to(['/site/contact'])],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => Url::to(['/site/signup'])];
-        $menuItems[] = ['label' => 'Login', 'url' => Url::to(['/site/login'])];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(Url::to(['/site/logout']), 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+        <link href='http://fonts.googleapis.com/css?family=Dancing+Script:400,700' rel='stylesheet' type='text/css' />
+        <link href='http://fonts.googleapis.com/css?family=Telex' rel='stylesheet' type='text/css' />
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css' />
+        <?php $this->head(); ?>
+    </head>
+    <body class='wsite-theme-light tall-header-page wsite-page-index weeblypage-index'>
+    <?php $this->beginBody(); ?>
+    <div id="wrap">
+        <div id="header-container">
+            <table id="header">
+                <tr>
+                    <td id="logo">
+                        <span class='wsite-logo'><a href='/'>
+                                <span id="wsite-title"><?php echo Html::encode(\Yii::$app->name); ?></span></a>
+                        </span>
+                    </td>
+                    <td id="header-right">
+                        <table>
+                            <tr>
+                                <td class="phone-number"></td>
+                                <td class="social"></td>
+                                <td class="search"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <div id="topnav">
+                <div id="nav-right">
+                    <div id="nav-inner">
+                        <?php
+                        NavBar::begin([
+                                          'brandLabel' => Yii::$app->name,
+                                          'brandUrl' => Yii::$app->homeUrl,
+                                          'options' => [
+                                              'class' => 'nav',
+                                          ],
+                                      ]);
+                        $menuItems = [
+                            ['label' => 'Home', 'url' => Url::to(['/site/index'])],
+                            ['label' => 'About', 'url' => Url::to(['/site/about'])],
+                            ['label' => 'Contact', 'url' => Url::to(['/site/contact'])],
+                            ['label' => 'Admin', 'url' => Yii::getAlias('@backendBaseUrl'), 'linkOptions' => ['target' => '_blank']],
+                            ['label' => 'phpMyAdmin', 'url' => Yii::getAlias('@phpmyadmin'), 'linkOptions' => ['target' => '_blank']],
+
+                        ];
+                        if (Yii::$app->user->isGuest) {
+                            $menuItems[] = ['label' => 'Signup', 'url' => Url::to(['/site/signup'])];
+                            $menuItems[] = ['label' => 'Login', 'url' => Url::to(['/site/login'])];
+                        } else {
+                            $menuItems[] = '<li>'
+                                . Html::beginForm(Url::to(['/site/logout']), 'post')
+                                . Html::submitButton(
+                                    'Logout (' . Yii::$app->user->identity->username . ')',
+                                    ['class' => 'btn btn-link logout']
+                                )
+                                . Html::endForm()
+                                . '</li>';
+                        }
+                        echo Nav::widget([
+                                             'options' => ['class' => 'nav'],
+                                             'items' => $menuItems,
+                                         ]);
+                        NavBar::end();
+                        ?>
+                        <div style="clear:both"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="main">
+            <div id="banner">
+                <div class="wsite-header"></div>
+            </div>
+            <div id="content"><div id='wsite-content' class='wsite-not-footer'>
+                    <?php echo $content; ?>
+                </div>
+            </div>
+        </div>
+        <div id="footer"><?php echo Html::encode(\Yii::$app->name); ?>
+        </div>
     </div>
-</div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
-
-<?php $this->endBody() ?>
-</body>
-</html>
-<?php $this->endPage() ?>
+    <?php $this->endBody(); ?>
+    </body>
+    </html>
+<?php $this->endPage(); ?>
