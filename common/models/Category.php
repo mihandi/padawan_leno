@@ -8,17 +8,15 @@ use Yii;
  * This is the model class for table "category".
  *
  * @property int $id
- * @property string $name
- * @property int $status
+ * @property string $title
+ * @property string $seo_url
  */
 class Category extends \yii\db\ActiveRecord
 {
-    const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 1;
-    const STATUS_DELETED = 2;
+    const META_TITLE = 'Необмежені можливості:';
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -26,27 +24,29 @@ class Category extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['status'], 'integer'],
-            [['name'], 'string', 'max' => 255],
-            [['name'], 'unique'],
+            [['title'], 'string', 'max' => 255],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'status' => 'Status',
+            'title' => 'Title',
+            'seo_url' => 'Seo Url'
         ];
+    }
+
+    public static function getLink($category_id, $category_seo_url)
+    {
+        return "/blog/category/" . $category_seo_url . '-' . $category_id;
     }
 }

@@ -1,41 +1,50 @@
 <?php
-
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
-
-use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+function err($errors)
+{
+    foreach ($errors as $error){
+        echo "<div class=\"help-block help-block-error \" style='color: #a94442'> $error </div>";
+    }
+}
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div style="color:#999;margin:1em 0">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                    <br>
-                    Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
-                </div>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
+<div class="modal-body" id="form">
+    <form method="post" action="/site/login" id="form_to_login">
+        <div class="form-group">
+            <label  class="form-control-label">Логин:</label>
+            <input type="text" class="form-control" name="LoginForm[login]" id="login" value="<?= isset($model['login'])?$model['login']:''?>">
+            <?php if(isset($model->errors['login'])):?>
+                <?php err($model->errors['login']); ?>
+            <?php endif;?>
         </div>
-    </div>
+        <div class="form-group">
+            <label  class="form-control-label">Пароль:</label>
+            <input type="password" class="form-control" name="LoginForm[password]" id="password">
+            <?php if(isset($model->errors['password'])):?>
+                <?php err($model->errors['password']); ?>
+            <?php endif;?>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+            <button type="submit" id="submit" class="btn au-btn-primary">Увiйти</button>
+        </div>
+    </form>
 </div>
+
+<script>
+    $( document ).ready(function() {
+        $( "#form_to_login" ).submit(function( event ) {
+            event.preventDefault();
+            $.ajax({
+                type: $(this).attr('method'),
+                url: '/site/login',
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(html){
+                    $('#form').html(html);
+                }
+            });
+        });
+    });
+</script>

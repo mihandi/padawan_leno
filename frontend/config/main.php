@@ -41,8 +41,13 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'baseUrl' => Yii::getAlias('@frontendBaseUrl'),
+            'baseUrl' => '',
             'rules' => [
+                'blog/article/<seo-url:(\S+)>-<article_id:(\S+)>' => 'blog/article/',
+                'blog/category/<seo-url:(\S+)>-<category_id:(\S+)>' => 'blog/category/',
+                'blog/search/<search:(\S+)>' => 'blog/search/',
+
+                'sitemap.xml' => 'sitemap/index'
             ],
         ],
     ],

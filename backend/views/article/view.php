@@ -1,5 +1,6 @@
 <?php
 
+use mihaildev\elfinder\InputFile;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -9,7 +10,6 @@ use yii\widgets\DetailView;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
 <div class="article-view">
 
@@ -31,14 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
+            'seo_url',
             'description:ntext',
             'content:ntext',
+            'image',
             'viewed',
             'user_id',
             'status',
             'category_id',
-            'created_at',
-            'updated_at',
+            'created_at:date',
+            'updated_at:date',
         ],
     ]) ?>
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models;
 
 use Yii;
@@ -9,35 +10,19 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
-    public $username;
+    public $login;
+    public $email;
     public $password;
-    public $rememberMe = true;
 
-    private $_user;
-
-
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
-            // username and password are both required
-            [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
-            ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+            [['login', 'password'], 'required'],
+//            ['email','email'],
+            ['password', 'validatePassword'] //собственная функция для валидации пароля
         ];
     }
 
-    /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
@@ -48,31 +33,36 @@ class LoginForm extends Model
         }
     }
 
-    /**
-     * Logs in a user using the provided username and password.
-     *
-     * @return bool whether the user is logged in successfully
-     */
-    public function login()
+    public function getUser()
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        return User::findOne(['email' => $this->login]) ? User::findOne(['email' => $this->login]) : User::findOne(
+            ['login' => $this->login]
+        );
+    }
+
+    public function getAdmin()
+    {
+        return User::findOne(['email' => $this->login, 'status' => [USER::USER_MODER, USER::USER_ADMIN]])
+            ? User::findOne(['email' => $this->login, 'status' => [USER::USER_MODER, USER::USER_ADMIN]])
+            : User::findOne(['login' => $this->login, 'status' => [USER::USER_MODER, USER::USER_ADMIN]]);
+    }
+
+    public function loginAdmin()
+    {
+        if ($this->validate() && $this->getAdmin()) {
+            return Yii::$app->user->login($this->getAdmin());
         }
-        
+
         return false;
     }
 
-    /**
-     * Finds user by [[username]]
-     *
-     * @return User|null
-     */
-    protected function getUser()
+    public function login()
     {
-        if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser());
         }
 
-        return $this->_user;
+        return false;
     }
+
 }

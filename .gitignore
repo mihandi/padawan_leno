@@ -49,3 +49,6 @@ vagrantfile
 #docker data dir
 
 /runtime/docker
+/backend/web/elfinder/gallery/*
+/backend/web/elfinder/global/*
+/backend/web/upload/timthumb/*

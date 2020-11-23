@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Functions;
 use Yii;
 use common\models\Category;
 use common\models\CategorySearch;
@@ -15,7 +16,7 @@ use yii\filters\VerbFilter;
 class CategoryController extends Controller
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -35,13 +36,19 @@ class CategoryController extends Controller
      */
     public function actionIndex()
     {
+        if (yii::$app->user->isGuest) {
+            return $this->redirect('/site/login');
+        }
         $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->render(
+            'index',
+            [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]
+        );
     }
 
     /**
@@ -52,9 +59,15 @@ class CategoryController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (yii::$app->user->isGuest) {
+            return $this->redirect('/site/login');
+        }
+        return $this->render(
+            'view',
+            [
+                'model' => $this->findModel($id),
+            ]
+        );
     }
 
     /**
@@ -64,15 +77,24 @@ class CategoryController extends Controller
      */
     public function actionCreate()
     {
+        if (yii::$app->user->isGuest) {
+            return $this->redirect('/site/login');
+        }
         $model = new Category();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->seo_url = Functions::getSeoUrl($model->title);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return $this->render(
+            'create',
+            [
+                'model' => $model,
+            ]
+        );
     }
 
     /**
@@ -84,15 +106,24 @@ class CategoryController extends Controller
      */
     public function actionUpdate($id)
     {
+        if (yii::$app->user->isGuest) {
+            return $this->redirect('/site/login');
+        }
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->seo_url = Functions::getSeoUrl($model->title);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->render(
+            'update',
+            [
+                'model' => $model,
+            ]
+        );
     }
 
     /**
@@ -104,6 +135,9 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
+        if (yii::$app->user->isGuest) {
+            return $this->redirect('/site/login');
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
