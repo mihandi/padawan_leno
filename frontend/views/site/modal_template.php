@@ -1,14 +1,14 @@
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>-->
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-
-<?php if(isset($model) && !$model->errors):?>
+<?php
+if (isset($model) && !$model->errors): ?>
     <div align="center" style='color: #64a933;'>Добро пожаловать</div>
     <script>
         window.location.reload()
     </script>
-<?php else: ?>
-    <div class="modal fade" id="LoginModal"  aria-hidden="true">
+<?php
+else: ?>
+    <div class="modal fade" id="LoginModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -20,38 +20,41 @@
                     </button>
 
                 </div>
-                <?php require_once('login.php');?>
+                <?php
+                require_once('login.php'); ?>
             </div>
         </div>
     </div>
-<?php endif;?>
+<?php
+endif; ?>
 
 <script>
-   function getSignUpForm() {
-            $.ajax({
-                type: $(this).attr('method'),
-                url: '/site/signup',
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(html){
-                    $('#form').html(html);
-                }
-            });
-   }
-   function getLoginForm() {
-       $.ajax({
-           type: $(this).attr('method'),
-           url: '/site/login',
-           data: new FormData(this),
-           contentType: false,
-           cache: false,
-           processData: false,
-           success: function(html){
-               $('#form').html(html);
-           }
-       });
-   }
+    function getSignUpForm() {
+        $.ajax({
+            type: $(this).attr('method'),
+            url: '/site/signup',
+            // data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (html) {
+                $('#form').html(html);
+            }
+        });
+    }
+
+    function getLoginForm() {
+        $.ajax({
+            type: $(this).attr('method'),
+            url: '/site/login',
+            // data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (html) {
+                $('#form').html(html);
+            }
+        });
+    }
 
 </script>

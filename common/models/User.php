@@ -16,8 +16,6 @@ use yii\web\IdentityInterface;
  * @property string $password
  * @property string $email
  * @property string $login
- * @property string $first_name
- * @property string $last_name
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -105,13 +103,16 @@ class User extends ActiveRecord implements IdentityInterface
     public function saveImage($filename)
     {
         $this->image = $filename;
+
         return $this->save(false);
     }
 
     public function getImage()
     {
         $date = date_create();
-        return ($this->image) ? '/admin/elfinder/global/users/user_' . $this->id . '/' . $this->image . '?' . date_timestamp_get(
+        return ($this->image) ? Yii::getAlias(
+                '@backendBaseUrl'
+            ) . '/elfinder/users/user_' . $this->id . '/' . $this->image . '?' . date_timestamp_get(
                 $date
             ) : '/no-image.png';
     }

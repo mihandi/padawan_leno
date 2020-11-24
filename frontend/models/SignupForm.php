@@ -13,8 +13,6 @@ class SignupForm extends Model
     public $login;
     public $email;
     public $password;
-    public $first_name;
-    public $last_name;
 
 
     /**
@@ -44,15 +42,6 @@ class SignupForm extends Model
                 'message' => 'This login  has already been taken.'
             ],
 
-
-            ['first_name', 'trim'],
-//            ['first_name', 'required'],
-            ['first_name', 'string', 'max' => 50],
-
-            ['last_name', 'trim'],
-//            ['last_name', 'required'],
-            ['last_name', 'string', 'max' => 50],
-
             ['password', 'required'],
             ['password', 'string', 'min' => 4],
         ];
@@ -68,8 +57,6 @@ class SignupForm extends Model
         $user = new User();
         $user->login = addslashes($this->login);
         $user->email = addslashes($this->email);
-        $user->first_name = addslashes($this->first_name);
-        $user->last_name = addslashes($this->last_name);
         $user->setPassword($this->password);
 
         return $user->save() ? $user : null;

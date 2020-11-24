@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use backend\assets\AppAsset;
@@ -13,7 +14,8 @@ use common\widgets\Alert;
 AppAsset::register($this);
 
 ?>
-<?php $this->beginPage() ?>
+<?php
+$this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
@@ -22,23 +24,27 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+    <?php
+    $this->head() ?>
 </head>
 <body>
-<?php $this->beginBody() ?>
+<?php
+$this->beginBody() ?>
 
 <div class="wrap">
     <?php
-    NavBar::begin([
-        'brandLabel' => "nm-admin",
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
+    NavBar::begin(
+        [
+            'brandLabel' => "nm-admin",
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar-inverse navbar-fixed-top',
+            ],
+        ]
+    );
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'Front', 'url' => ['/front-home']]
+        ['label' => 'Front', 'url' => Yii::getAlias('@frontendBaseUrl')]
 
 
     ];
@@ -49,7 +55,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Articles', 'url' => ['/article/index']];
         $menuItems[] = ['label' => 'Gallery', 'url' => ['/gallery/index']];
         $menuItems[] = ['label' => 'Categories', 'url' => ['/category/index']];
-        $menuItems[] =  ['label' => 'Comments', 'url' => ['/comment/index']];
+        $menuItems[] = ['label' => 'Comments', 'url' => ['/comment/index']];
 
 
         $menuItems[] = '<li>'
@@ -61,17 +67,21 @@ AppAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
+    echo Nav::widget(
+        [
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => $menuItems,
+        ]
+    );
     NavBar::end();
     ?>
 
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        <?= Breadcrumbs::widget(
+            [
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]
+        ) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
@@ -85,7 +95,9 @@ AppAsset::register($this);
     </div>
 </footer>
 
-<?php $this->endBody() ?>
+<?php
+$this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage() ?>
+<?php
+$this->endPage() ?>

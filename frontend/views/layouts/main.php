@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use common\models\User;
@@ -10,10 +11,12 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+
 $admins = User::getAdmins();
 AppAsset::register($this);
 ?>
-<?php $this->beginPage() ?>
+<?php
+$this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
@@ -23,10 +26,12 @@ AppAsset::register($this);
     <link rel="shortcut icon" href="/images/logos.ico">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+    <?php
+    $this->head() ?>
 </head>
 <body>
-<?php $this->beginBody() ?>
+<?php
+$this->beginBody() ?>
 
 <div class="wrap">
     <header class="header">
@@ -60,24 +65,31 @@ AppAsset::register($this);
                                 <li class="nav-item">
                                     <a class="nav-link" href="/gallery/">ГАЛЕРЕЯ</a>
                                 </li>
-                                <?php if(in_array(yii::$app->user->id,$admins)):?>
+                                <?php
+                                if (in_array(yii::$app->user->id, $admins)): ?>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/admin/">Admin Panel</a>
+                                        <a class="nav-link" href="<?= Yii::getAlias('@backendBaseUrl') ?>">Admin
+                                            Panel</a>
                                     </li>
-                                <?php endif;?>
-                                <?php if (Yii::$app->user->isGuest): ?>
+                                <?php
+                                endif; ?>
+                                <?php
+                                if (Yii::$app->user->isGuest): ?>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="modal" data-target="#LoginModal" href="/site/login">УВІЙТИ</a>
+                                        <a class="nav-link" data-toggle="modal" data-target="#LoginModal"
+                                           href="/site/login">УВІЙТИ</a>
                                     </li>
 
-                                <?php else: ?>
+                                <?php
+                                else: ?>
                                     <li class="nav-item">
                                         <a class="nav-link" href="/site/personal">МІЙ ПРОФІЛЬ</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="/site/logout">ВИЙТИ</a>
                                     </li>
-                                <?php endif;?>
+                                <?php
+                                endif; ?>
                             </ul>
                         </nav>
                     </div>
@@ -88,7 +100,8 @@ AppAsset::register($this);
             </div>
         </div>
         <!-- end header desktop-->
-        <?php  ?>
+        <?php
+        ?>
         <!-- header mobile-->
         <div class="header-mobile header-fixed d-lg-none">
             <div class="container-fluid">
@@ -137,37 +150,48 @@ AppAsset::register($this);
                             <li class="nav-item">
                                 <a class="nav-link" href="/gallery/">ГАЛЕРЕЯ</a>
                             </li>
-                            <?php if(in_array(yii::$app->user->id,$admins)):?>
+                            <?php
+                            if (in_array(yii::$app->user->id, $admins)): ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/admin/">Admin Panel</a>
+                                    <a class="nav-link" href="<?= Yii::getAlias('@backendBaseUrl') ?>">Admin Panel</a>
                                 </li>
-                            <?php endif;?>
-                            <?php if (Yii::$app->user->isGuest): ?>
+                            <?php
+                            endif; ?>
+                            <?php
+                            if (Yii::$app->user->isGuest): ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="modal" data-target="#LoginModal" href="#">УВІЙТИ</a>
+                                    <a class="nav-link" data-toggle="modal" data-target="#LoginModal"
+                                       href="#">УВІЙТИ</a>
                                 </li>
 
-                            <?php else: ?>
+                            <?php
+                            else: ?>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/site/personal">МІЙ ПРОФІЛЬ</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/site/logout">ВИЙТИ</a>
                                 </li>
-                            <?php endif;?>
+                            <?php
+                            endif; ?>
                         </ul>
                     </nav>
-                    <?php //TODO  modify mobile footer?>
-                    <div class="slidebar-footer" >
+                    <?php
+                    //TODO  modify mobile footer?>
+                    <div class="slidebar-footer">
                         <ul class="socials h-list">
                             <li class="social-item">
                                 <a class="fa fa-envelope" href="#" data-toggle="tooltip" title="Email"></a>
                             </li>
                             <li class="social-item">
-                                <a class="fa fa-instagram" target="_blank" href="https://www.instagram.com/neobmezheni_mozhlyvosti/" data-toggle="tooltip" title="Instagram"></a>
+                                <a class="fa fa-instagram" target="_blank"
+                                   href="https://www.instagram.com/neobmezheni_mozhlyvosti/" data-toggle="tooltip"
+                                   title="Instagram"></a>
                             </li>
                             <li class="social-item">
-                                <a class="fa fa-facebook" target="_blank" href="https://www.facebook.com/neobmezheni.mozhlyvosti/" data-toggle="tooltip" title="Facebook"></a>
+                                <a class="fa fa-facebook" target="_blank"
+                                   href="https://www.facebook.com/neobmezheni.mozhlyvosti/" data-toggle="tooltip"
+                                   title="Facebook"></a>
                             </li>
                         </ul>
                         <p class="fo-copy"> Mika 2018</p>
@@ -182,7 +206,7 @@ AppAsset::register($this);
     <?= $content ?>
 </div>
 
-<footer class="footer footer-primary bg-dark-2 p-t-30 p-b-30" >
+<footer class="footer footer-primary bg-dark-2 p-t-30 p-b-30">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 fo-left">
@@ -194,10 +218,14 @@ AppAsset::register($this);
                         <a class="fa fa-envelope" href="#" data-toggle="tooltip" title="Email"></a>
                     </li>
                     <li class="social-item">
-                        <a class="fa fa-instagram" target="_blank" href="https://www.instagram.com/neobmezheni_mozhlyvosti/" data-toggle="tooltip" title="Instagram"></a>
+                        <a class="fa fa-instagram" target="_blank"
+                           href="https://www.instagram.com/neobmezheni_mozhlyvosti/" data-toggle="tooltip"
+                           title="Instagram"></a>
                     </li>
                     <li class="social-item">
-                        <a class="fa fa-facebook" target="_blank" href="https://www.facebook.com/neobmezheni.mozhlyvosti/" data-toggle="tooltip" title="Facebook"></a>
+                        <a class="fa fa-facebook" target="_blank"
+                           href="https://www.facebook.com/neobmezheni.mozhlyvosti/" data-toggle="tooltip"
+                           title="Facebook"></a>
                     </li>
                 </ul>
             </div>
@@ -205,10 +233,13 @@ AppAsset::register($this);
     </div>
 </footer>
 
-<?php require_once ('../views/site/modal_template.php');?>
+<?php
+require_once('../views/site/modal_template.php'); ?>
 
 
-<?php $this->endBody() ?>
+<?php
+$this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage() ?>
+<?php
+$this->endPage() ?>

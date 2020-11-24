@@ -32,6 +32,23 @@ class AppAsset extends AssetBundle
 
     ];
     public $js = [
+        //        "vendor/jquery/jquery.min.js",
+        "vendor/popper.js/popper.min.js",
+        "vendor/bootstrap/bootstrap.min.js",
+        "vendor/slick/slick.min.js",
+        "vendor/animsition/animsition.min.js",
+        "vendor/waypoints/jquery.waypoints.min.js",
+        "vendor/jquery.counterup/jquery.counterup.min.js",
+        "vendor/bootstrap-progressbar/bootstrap-progressbar.min.js",
+        "vendor/lightbox/js/lightbox.min.js",
+        "vendor/isotope/isotope.pkgd.min.js",
+        "vendor/wowjs/wow.min.js",
+        "vendor/revolution/js/jquery.themepunch.tools.min.js",
+        "vendor/revolution/js/jquery.themepunch.revolution.min.js",
+        "js/config-revolution-slider.min.js",
+        "js/config-contact.js",
+        "js/global.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.0/jquery.fancybox.min.js"
     ];
     public $depends = [
         'yii\web\YiiAsset',

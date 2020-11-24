@@ -102,6 +102,7 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+
         $model = new LoginForm();
 
         if (yii::$app->request->isAjax) {
@@ -183,9 +184,9 @@ class SiteController extends Controller
         $user = User::findOne($id);
         $model = new ImageUpload();
         if ($user->image) {
-            $model->image = '/admin/elfinder/global/users/user_' . $id . '/' . $user->image;
+            $model->image = Yii::getAlias('@backendBaseUrl') . '/elfinder/users/user_' . $id . '/' . $user->image;
         }
-        $path_to_folder = Yii::getAlias('@backend') . '/web/elfinder/global/users/user_' . $id;
+        $path_to_folder = Yii::getAlias('@backend') . '/web/elfinder/users/user_' . $id;
 
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
@@ -200,7 +201,6 @@ class SiteController extends Controller
             )->resize(
                 new Box($post['width'], $post['height'])
             );
-//            var_dump($image);die();
 
             $saveOptions = ['jpeg_quality' => 100, 'png_compression_level' => 1];
 
@@ -208,15 +208,17 @@ class SiteController extends Controller
                 mkdir($path_to_folder);
             }
             $imageName = 'user-logo.jpg';
+
             if ($image->save($path_to_folder . '/' . $imageName, $saveOptions)) {
                 $date = date_create();
                 $result = [
-                    'filelink' => '/admin/elfinder/global/users/user_' . $id . '/' . $imageName . '?' . date_timestamp_get(
+                    'filelink' => Yii::getAlias(
+                            '@backendBaseUrl'
+                        ) . '/elfinder/users/user_' . $id . '/' . $imageName . '?' . date_timestamp_get(
                             $date
                         )
                 ];
-                $user->image = $imageName;
-                $user->save();
+                $user->saveImage($imageName);
             } else {
                 $result = [
                     'error' => Yii::t('cropper', 'ERROR_CAN_NOT_UPLOAD_FILE')
@@ -233,7 +235,6 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
-
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->sendEmail('adrej997@gmail.com');

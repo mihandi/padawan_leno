@@ -50,5 +50,6 @@ vagrantfile
 
 /runtime/docker
 /backend/web/elfinder/gallery/*
+/backend/web/elfinder/users/*
 /backend/web/elfinder/global/*
 /backend/web/upload/timthumb/*

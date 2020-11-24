@@ -111,7 +111,7 @@ class ImageUpload extends Model
 
     public function createUserFolder($user_id)
     {
-        $path_to_folder = Yii::getAlias('@backend') . '/web/elfinder/global/users/user_' . $user_id;
+        $path_to_folder = Yii::getAlias('@backend') . '/web/elfinder/users/user_' . $user_id;
         if (!is_dir($path_to_folder)) {
             Functions::custom_mkdir($path_to_folder);
         }
