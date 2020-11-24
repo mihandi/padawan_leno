@@ -13,7 +13,7 @@ class m201123_180718_add_gallery_table extends Migration
     public function safeUp()
     {
         $this->createTable(
-            'article',
+            'gallery',
             [
                 'id' => $this->primaryKey(),
                 'title' => $this->string(),

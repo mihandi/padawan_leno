@@ -13,7 +13,7 @@ class m201122_073625_add_default_data extends Migration
     public function safeUp()
     {
         $this->createTable(
-            'article',
+            'image',
             [
                 'id' => $this->primaryKey(),
                 'name' => $this->string(),
@@ -27,7 +27,7 @@ class m201122_073625_add_default_data extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('article');
+        $this->dropTable('image');
     }
 
     /*
